@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EzAudioInputLib</string>
+    <string name="ez_audio_btn_default_msg">按住说话</string>
 </resources>
