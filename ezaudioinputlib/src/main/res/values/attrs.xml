@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="EzWaterRippleView">
+        <attr name="ezRippleSpacing" format="dimension|reference" />
+        <attr name="ezRippleCount" format="integer|reference" />
+        <attr name="ezRippleColor" format="color|reference" />
+        <attr name="ezRippleCenterIcon" format="reference" />
+        <attr name="ezRippleAutoRunning" format="boolean" />
+    </declare-styleable>
+
+
+</resources>

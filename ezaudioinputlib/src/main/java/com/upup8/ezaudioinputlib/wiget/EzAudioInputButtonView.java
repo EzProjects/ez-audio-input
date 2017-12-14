@@ -12,6 +12,7 @@ import com.upup8.ezaudioinputlib.EzMediaRecorderManager;
  * EzAudioInputView
  * Created by renwoxing on 2017/12/10.
  */
+@Deprecated
 public class EzAudioInputButtonView extends AppCompatButton {
 
     private static final String TAG = "RecordAudioView";

@@ -45,7 +45,7 @@ public class EzMediaRecorderManager {
 
     public void startRecord() {
         if (recordStatus == RecordStatus.READY) {
-            Log.d(TAG, "startRecord()");
+            Log.d(TAG, "startRecord():" + audioFileName);
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);

@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">EzAudioInputLib</string>
     <string name="ez_audio_btn_default_msg">按住说话</string>
+    <string name="ez_audio_btn_slide_top_msg">手指上滑，取消发送</string>
+    <string name="ez_audio_btn_slide_top_start_msg">手指正在上滑,即将取消发送</string>
 </resources>

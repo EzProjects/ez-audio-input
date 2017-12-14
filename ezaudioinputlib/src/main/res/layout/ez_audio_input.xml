@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorF5F5F5"
@@ -14,15 +15,26 @@
         android:textColor="@color/color000000"
         android:textSize="14sp" />
 
-    <ImageView
-        android:id="@+id/ez_iv_audio_btn"
+    <!--<ImageView-->
+    <!--android:id="@+id/ez_iv_audio_btn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginBottom="60dp"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:contentDescription="@string/app_name"-->
+    <!--android:src="@drawable/ez_audio_input_btn_selector" />-->
+
+    <com.upup8.ezaudioinputlib.wiget.EzWaterRippleView
+        android:id="@+id/ez_audio_wr_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="60dp"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ez_audio_input_btn_selector" />
+        app:ezRippleAutoRunning="false"
+        app:ezRippleCenterIcon="@drawable/ez_ico_audio_voice"
+        app:ezRippleColor="@color/color_blue_24A9FC"
+        app:ezRippleCount="4"
+        app:ezRippleSpacing="16dp" />
 
 
 </LinearLayout>

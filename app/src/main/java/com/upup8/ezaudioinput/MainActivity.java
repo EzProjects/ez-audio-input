@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,13 +17,17 @@ import android.webkit.WebView;
 
 import com.upup8.ezaudioinputlib.view.EzAudioInputView;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.File;
+import java.util.UUID;
+
+public class MainActivity extends AppCompatActivity implements EzAudioInputView.IEzRecordAudioInputListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     //EzAudioInputView mEzAudioInputView;
     private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private Context mContext;
     private EzAudioInputView mEzAudioInputView;
+    //private EzWaterRippleView mEzWaterRippleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mEzAudioInputView = findViewById(R.id.ez_audio_input_view);
+        mEzAudioInputView.setEzRecordAudioListener(this);
+
+        //mEzWaterRippleView = (EzWaterRippleView) mEzAudioInputView.findViewById(R.id.ez_audio_wr_btn);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,8 +58,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (mEzAudioInputView.getVisibility() == View.GONE) {
                     mEzAudioInputView.setVisibility(View.VISIBLE);
+//                    mEzAudioInputView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            mEzWaterRippleView.start();
+//                        }
+//                    });
                 } else {
                     mEzAudioInputView.setVisibility(View.GONE);
+                    //mEzWaterRippleView.stop();
                 }
             }
         });
@@ -153,4 +168,66 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onRecordPrepare() {
+        // TODO: 2017/12/13 检测有无权限
+        return true;
+    }
+
+    @Override
+    public String onRecordStart() {
+        String audioFileName = getApplicationContext().getExternalCacheDir() + File.separator + createAudioName();
+        Log.d(TAG, "-------- onRecordStart path: " + audioFileName);
+        //mEzWaterRippleView.start();
+        return audioFileName;
+    }
+
+    /**
+     * 录音完成
+     *
+     * @return
+     */
+    @Override
+    public boolean onRecordStop() {
+        Log.d(TAG, "onRecordStop: ");
+        //mEzWaterRippleView.stop();
+        return false;
+    }
+
+    /**
+     * 放弃
+     *
+     * @return
+     */
+    @Override
+    public boolean onRecordCancel() {
+        //放弃
+        Log.d(TAG, "onRecordCancel: ");
+        //mEzWaterRippleView.stop();
+        return false;
+    }
+
+    /**
+     * 向上滑动取消
+     */
+    @Override
+    public void onSlideTop() {
+        Log.d(TAG, "onSlideTop: 向上取消 ");
+        //mEzWaterRippleView.stop();
+    }
+
+    /**
+     * 手指移动
+     */
+    @Override
+    public void onFingerPress() {
+        Log.d(TAG, " 《 ---- 》onFingerPress: ");
+    }
+
+
+    private String createAudioName() {
+        long time = System.currentTimeMillis();
+        String fileName = UUID.randomUUID().toString() + time + ".amr";
+        return fileName;
+    }
 }
