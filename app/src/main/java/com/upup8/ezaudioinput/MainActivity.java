@@ -191,8 +191,8 @@ public class MainActivity extends AppCompatActivity implements EzAudioInputView.
      * @return
      */
     @Override
-    public boolean onRecordStop() {
-        Log.d(TAG, "onRecordStop: ");
+    public boolean onRecordStop(int mDuration) {
+        Log.d(TAG, "onRecordStop:  mDuration :" + mDuration);
         //mEzWaterRippleView.stop();
         EzMediaPlayerManager.playSound(maudioFilePath, new MediaPlayer.OnCompletionListener() {
             @Override

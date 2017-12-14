@@ -17,6 +17,7 @@ public class EzMediaRecorderManager {
     private volatile static EzMediaRecorderManager INSTANCE;
     private MediaRecorder mediaRecorder;
     private String audioFileName;
+    private int mMaxDuration = 60;
     private RecordStatus recordStatus = RecordStatus.STOP;
 
     public enum RecordStatus {
@@ -40,7 +41,12 @@ public class EzMediaRecorderManager {
     }
 
     public void init(String audioFileName) {
+        init(audioFileName, 60);
+    }
+
+    public void init(String audioFileName, int maxDuration) {
         this.audioFileName = audioFileName;
+        this.mMaxDuration = maxDuration;
         recordStatus = RecordStatus.READY;
     }
 
@@ -56,6 +62,9 @@ public class EzMediaRecorderManager {
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             // 设置录音文件的保存位置
             mediaRecorder.setOutputFile(audioFileName);
+            // todo 设置录音最大时长 ，需要显示调用 stop 实现 接口
+            // mediaRecorder.setMaxDuration(mMaxDuration);
+
 
             try {
                 mediaRecorder.prepare();

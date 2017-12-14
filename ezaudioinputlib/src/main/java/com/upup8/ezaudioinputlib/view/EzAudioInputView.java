@@ -1,6 +1,8 @@
 package com.upup8.ezaudioinputlib.view;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -9,9 +11,11 @@ import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.upup8.ezaudioinputlib.manager.EzMediaRecorderManager;
 import com.upup8.ezaudioinputlib.R;
+import com.upup8.ezaudioinputlib.manager.EzMediaRecorderManager;
 import com.upup8.ezaudioinputlib.wiget.EzWaterRippleView;
+
+import java.io.File;
 
 /**
  * Audio 录音控件
@@ -30,6 +34,8 @@ public class EzAudioInputView extends LinearLayout {
     private boolean isRecording;
     private EzWaterRippleView mEzWaterRippleView;
     private TextView mEzAudioTitle;
+    private Context mContext;
+    private String mAudioFileName;
 
     public EzAudioInputView(Context context) {
         this(context, null);
@@ -46,7 +52,7 @@ public class EzAudioInputView extends LinearLayout {
     }
 
     private void initView(Context context) {
-        //this.mContext = context;
+        this.mContext = context;
         LayoutInflater.from(context).inflate(R.layout.ez_audio_input, this);
         mMediaRecorderManager = EzMediaRecorderManager.getInstance();
         mEzWaterRippleView = findViewById(R.id.ez_audio_wr_btn);
@@ -122,11 +128,11 @@ public class EzAudioInputView extends LinearLayout {
     private void startRecordAudio() throws RuntimeException {
         boolean isPrepare = audioInputListener.onRecordPrepare();
         if (isPrepare) {
-            String audioFileName = audioInputListener.onRecordStart();
+            mAudioFileName = audioInputListener.onRecordStart();
             Log.d(TAG, "startRecordAudio() has prepared.");
             //准备就绪开始录制
             try {
-                mMediaRecorderManager.init(audioFileName);
+                mMediaRecorderManager.init(mAudioFileName);
                 mMediaRecorderManager.startRecord();
                 mEzWaterRippleView.start();
                 mEzAudioTitle.setText(R.string.ez_audio_btn_slide_top_msg);
@@ -148,7 +154,21 @@ public class EzAudioInputView extends LinearLayout {
             try {
                 isRecording = false;
                 mMediaRecorderManager.stopRecord();
-                this.audioInputListener.onRecordStop();
+                int retDuration = -1;
+                MediaPlayer mp = null;
+                try {
+                    mp = MediaPlayer.create(mContext, Uri.fromFile(new File(mAudioFileName)));
+                    retDuration = mp.getDuration();
+                } finally {
+                    if (mp != null) {
+                        mp.stop();
+                        mp.reset();
+                        mp.release();
+                        mp = null;
+                    }
+                    this.audioInputListener.onRecordStop(retDuration);
+                }
+
             } catch (Exception e) {
                 this.audioInputListener.onRecordCancel();
             } finally {
@@ -178,7 +198,7 @@ public class EzAudioInputView extends LinearLayout {
 
         String onRecordStart();
 
-        boolean onRecordStop();
+        boolean onRecordStop(int mDuration);
 
         boolean onRecordCancel();
 
