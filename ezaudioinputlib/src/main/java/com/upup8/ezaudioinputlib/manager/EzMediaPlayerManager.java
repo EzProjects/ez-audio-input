@@ -6,6 +6,16 @@ import android.media.MediaPlayer;
 import java.io.IOException;
 
 /**
+ * MediaPlayer 播放文件
+ * <code>
+ * //播放录音
+ * EzMediaPlayerManager.playSound(getCurrentFilePath(), new MediaPlayer.OnCompletionListener() {
+ *
+ * @Override public void onCompletion(MediaPlayer mp) {
+ * //当播放完了之后 to do something
+ * }
+ * });
+ * </code>
  * EzMediaPlayerManager
  * Created by renwoxing on 2017/12/14.
  */
@@ -80,6 +90,9 @@ public class EzMediaPlayerManager {
      */
     public static void realese() {
         if (mMediaPlayer != null) {
+            mMediaPlayer.stop();
+            //需要重置 内存清理关键
+            mMediaPlayer.reset();
             mMediaPlayer.release();
             mMediaPlayer = null;
             isPause = true;

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 
+import com.upup8.ezaudioinputlib.manager.EzMediaPlayerManager;
 import com.upup8.ezaudioinputlib.view.EzAudioInputView;
 
 import java.io.File;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements EzAudioInputView.
     private Context mContext;
     private EzAudioInputView mEzAudioInputView;
     //private EzWaterRippleView mEzWaterRippleView;
+    private String maudioFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,10 +179,10 @@ public class MainActivity extends AppCompatActivity implements EzAudioInputView.
 
     @Override
     public String onRecordStart() {
-        String audioFileName = getApplicationContext().getExternalCacheDir() + File.separator + createAudioName();
-        Log.d(TAG, "-------- onRecordStart path: " + audioFileName);
+        maudioFilePath = getApplicationContext().getExternalCacheDir() + File.separator + createAudioName();
+        Log.d(TAG, "-------- onRecordStart path: " + maudioFilePath);
         //mEzWaterRippleView.start();
-        return audioFileName;
+        return maudioFilePath;
     }
 
     /**
@@ -191,6 +194,12 @@ public class MainActivity extends AppCompatActivity implements EzAudioInputView.
     public boolean onRecordStop() {
         Log.d(TAG, "onRecordStop: ");
         //mEzWaterRippleView.stop();
+        EzMediaPlayerManager.playSound(maudioFilePath, new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                EzMediaPlayerManager.realese();
+            }
+        });
         return false;
     }
 
