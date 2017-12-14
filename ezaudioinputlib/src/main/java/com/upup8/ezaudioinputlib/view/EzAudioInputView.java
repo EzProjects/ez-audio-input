@@ -9,11 +9,12 @@ import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.upup8.ezaudioinputlib.EzMediaRecorderManager;
+import com.upup8.ezaudioinputlib.manager.EzMediaRecorderManager;
 import com.upup8.ezaudioinputlib.R;
 import com.upup8.ezaudioinputlib.wiget.EzWaterRippleView;
 
 /**
+ * Audio 录音控件
  * EzAudioInputView
  * Created by renwoxing on 2017/12/11.
  */

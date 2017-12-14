@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.upup8.ezaudioinputlib.EzMediaRecorderManager;
+import com.upup8.ezaudioinputlib.manager.EzMediaRecorderManager;
 
 /**
  * EzAudioInputView

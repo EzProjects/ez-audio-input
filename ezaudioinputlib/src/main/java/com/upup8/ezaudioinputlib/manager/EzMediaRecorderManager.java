@@ -1,4 +1,4 @@
-package com.upup8.ezaudioinputlib;
+package com.upup8.ezaudioinputlib.manager;
 
 import android.media.MediaRecorder;
 import android.util.Log;
@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * MediaRecorder
  * EzMediaRecorderManager
  * Created by renwoxing on 2017/12/10.
  */
@@ -47,9 +48,13 @@ public class EzMediaRecorderManager {
         if (recordStatus == RecordStatus.READY) {
             Log.d(TAG, "startRecord():" + audioFileName);
             mediaRecorder = new MediaRecorder();
+            // 设置录音的来源（从哪里录音）
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            // 设置录音的保存格式
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
+            // 设置录音的编码
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            // 设置录音文件的保存位置
             mediaRecorder.setOutputFile(audioFileName);
 
             try {
